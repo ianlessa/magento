@@ -40,6 +40,11 @@
             <paymentmodule>
                 <class>Mundipagg_Paymentmodule_Block</class>
             </paymentmodule>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_totals>Mundipagg_Paymentmodule_Block_Adminhtml_Sales_Order_Totals</sales_order_totals>
+                </rewrite>
+            </adminhtml>
         </blocks>
 
         <fieldsets>
@@ -47,22 +52,7 @@
                 <mundipagg_interest>
                     <to_order>*</to_order>
                 </mundipagg_interest>
-                <mundipagg_base_interest>
-                    <to_order>*</to_order>
-                </mundipagg_base_interest>
             </sales_convert_quote_address>
-            <sales_convert_order>
-                <mundipagg_interest>
-                    <to_invoice>*</to_invoice>
-                    <to_shipment>*</to_shipment>
-                    <to_cm>*</to_cm>
-                </mundipagg_interest>
-                <mundipagg_base_interest>
-                    <to_invoice>*</to_invoice>
-                    <to_shipment>*</to_shipment>
-                    <to_cm>*</to_cm>
-                </mundipagg_base_interest>
-            </sales_convert_order>
         </fieldsets>
 
         <events>
