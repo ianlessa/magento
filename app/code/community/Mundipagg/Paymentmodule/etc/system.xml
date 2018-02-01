@@ -328,11 +328,142 @@
                     </fields>
                 </creditcard_group>
 
+                <boletocreditcard_group translate="label" module="paymentmodule">
+                    <label><![CDATA[<img title="Boleto Creditcard" alt="Boleto Creditcard" width="32" style="margin-top:9px;" src="/skin/adminhtml/default/default/images/mundipagg/icons/creditcard.png"/> <div style="margin:-29px 0 13px 40px"> Boleto and Credit Card configuration</div>]]></label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1200</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+
+                    <fields>
+                        <boleto_cards_config translate="label">
+                            <label>General boleto and credit card configuration</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </boleto_cards_config>
+                        <boleto_cards_config_status translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </boleto_cards_config_status>
+                        <boleto_creditcard_payment_title translate="label">
+                            <label>Payment title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <depends>
+                                <boleto_cards_config_status>1</boleto_cards_config_status>
+                            </depends>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </boleto_creditcard_payment_title>
+                        <boleto_cards_config_header translate="label">
+                            <label>Boleto configuration</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>2</sort_order>
+                            <depends>
+                                <boleto_cards_config_status>1</boleto_cards_config_status>
+                            </depends>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </boleto_cards_config_header>
+                        <boleto_cards_name translate="label">
+                            <label>Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <depends>
+                                <boleto_cards_config_status>1</boleto_cards_config_status>
+                            </depends>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </boleto_cards_name>
+                        <boleto_cards_bank translate="label">
+                            <label>Select bank</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Mundipagg_Paymentmodule_Model_BankCodes</source_model>
+                            <sort_order>4</sort_order>
+                            <depends>
+                                <boleto_cards_config_status>1</boleto_cards_config_status>
+                            </depends>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </boleto_cards_bank>
+                        <boleto_cards_due_at translate="label">
+                            <label>Due at</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+                            <depends>
+                                <boleto_cards_config_status>1</boleto_cards_config_status>
+                            </depends>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </boleto_cards_due_at>
+                        <boleto_cards_instructions translate="label">
+                            <label>Instructions</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>6</sort_order>
+                            <depends>
+                                <boleto_cards_config_status>1</boleto_cards_config_status>
+                            </depends>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </boleto_cards_instructions>
+                        <boleto_creditcard_config_header translate="label">
+                            <label>CreditCard configuration</label>
+                            <frontend_model>adminhtml/system_config_form_field_heading</frontend_model>
+                            <sort_order>8</sort_order>
+                            <depends>
+                                <boleto_cards_config_status>1</boleto_cards_config_status>
+                            </depends>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </boleto_creditcard_config_header>
+                        <boleto_cards_invoice_name translate="label">
+                            <label>Invoice's name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>9</sort_order>
+                            <depends>
+                                <boleto_cards_config_status>1</boleto_cards_config_status>
+                            </depends>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </boleto_cards_invoice_name>
+                        <boleto_cards_operation_type translate="label">
+                            <label>Operation type</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>Mundipagg_Paymentmodule_Model_CreditCardOperationType</source_model>
+                            <comment>Select operation type</comment>
+                            <sort_order>10</sort_order>
+                            <depends>
+                                <boleto_cards_config_status>1</boleto_cards_config_status>
+                            </depends>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </boleto_cards_operation_type>
+                    </fields>
+                </boletocreditcard_group>
+
                 <!-- INSTALLMENTS -->
                 <installments_group translate="label" module="paymentmodule">
                     <label><![CDATA[<img title="Installments" alt="Installments" width="37" style="margin: 9px 0 0 0px;" src="/skin/adminhtml/default/default/images/mundipagg/icons/installments.png"/><div style="margin: -26px 0 11px 45px;">Installments configuration</div>]]></label>
                     <frontend_type>text</frontend_type>
-                    <sort_order>1200</sort_order>
+                    <sort_order>1300</sort_order>
                     <show_in_default>1</show_in_default>
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
