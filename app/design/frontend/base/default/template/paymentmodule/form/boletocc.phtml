@@ -1,0 +1,244 @@
+<?php $_code = $this->getMethodCode(); ?>
+<fieldset>
+    <ul id="payment_form_<?php echo $_code; ?>" style="display:none;">
+        <li>
+            <div id="mundipagg_boletocc">
+                <ul >
+                    <li style="clear:both">
+                        <div class="input-box"  id="tokenDiv" data-mundicheckout-app-id="<?php echo $this->getPublicKey(); ?>">
+                            <h6>Credit Card</h6>
+                            <div class="input-box">
+                                <img
+                                        src="https://dashboard.mundipagg.com/emb/images/brands/amex.jpg"
+                                        style="float: left; width: 30px; margin-right: 5px;"
+                                />
+                                <img
+                                        src="https://dashboard.mundipagg.com/emb/images/brands/diners.jpg"
+                                        style="float: left; width: 30px; margin-right: 5px;"
+                                />
+                                <img
+                                        src="https://dashboard.mundipagg.com/emb/images/brands/elo.jpg"
+                                        style="float: left; width: 30px; margin-right: 5px;"
+                                />
+                                <img
+                                        src="https://dashboard.mundipagg.com/emb/images/brands/hipercard.jpg"
+                                        style="float: left; width: 30px; margin-right: 5px;"
+                                />
+                                <img
+                                        src="https://dashboard.mundipagg.com/emb/images/brands/visa.jpg"
+                                        style="float: left; width: 30px; margin-right: 5px;"
+                                />
+                                <img
+                                        src="https://dashboard.mundipagg.com/emb/images/brands/mastercard.jpg"
+                                        style="float: left; width: 30px; margin-right: 5px;"
+                                />
+                                <br>
+                            </div>
+
+                            <label for="payment[creditCardNumber]">
+                                Card number<span class="required">*</span>
+                            </label>
+                            <div class="input-box">
+                                <span id="mundipaggBrandImage"></span>
+                                <input type="hidden" id="mundipaggBrandName" value="">
+                                <input
+                                        type="text"
+                                        data-mundicheckout-input="number"
+                                        class="required-entry validate-cc-number mundipaggInput"
+                                        id="mundicheckout-number"
+                                        onkeyup="getFormData(); getBrand(this.value);"
+                                        onchange="getFormData(); getBrand(this.value);"
+                                        maxlength="19"
+                                        name="payment[creditCardNumber]"
+                                >
+                            </div>
+
+                            <label for="">Holder name<span class="required">*</span></label>
+                            <div class="input-box">
+                                <input
+                                        type="text"
+                                        data-mundicheckout-input="holder_name "
+                                        class="required-entry"
+                                        id="mundicheckout-holdername"
+                                        onkeyup="getFormData()"
+                                        name="payment[holderName]"><br>
+                            </div>
+
+                            <label for="">Expiration date<span class="required">*</span></label>
+                            <div class="input-box">
+                                <div class="v-fix">
+                                    <select
+                                            class="required-entry"
+                                            id="mundicheckout-expmonth"
+                                            onchange="getFormData();"
+                                            name="payment[creditCardExpMonth]"
+                                    >
+                                        <option value="">--- Mês --- </option>
+                                        <?php for ($month = 1; $month < 13; $month++ ) { ?>
+                                            <option value="<?php echo str_pad($month, "2", "0", STR_PAD_LEFT); ?>">
+                                                <?php
+                                                echo str_pad($month, "2", "0", STR_PAD_LEFT);
+                                                ?>
+                                            </option>
+                                        <?php } ?>
+
+                                    </select>
+                                </div>
+                                <div class="v-fix">
+                                    <select
+                                            class="required-entry"
+                                            id="mundicheckout-expyear"
+                                            onchange="getFormData();"
+                                            name="payment[creditCardExpYear]"
+                                    >
+                                        <option value="">--- Ano --- </option>
+                                        <?php for ($year = date("Y"); $year < date("Y") + 11; $year++ ) { ?>
+                                            <option value="<?php echo $year; ?>"><?php echo $year; ?></option>
+                                        <?php } ?>
+                                    </select>
+                                </div>
+                            </div>
+                            <input
+                                    type="hidden"
+                                    class="validate-mundipagg-creditcard-exp"
+                                    id="mundicheckout-expiration-date"
+                                    name="payment[creditCardExpDate]"><br>
+
+                            <label for="">Parcelamento<span class="required">*</span></label>
+                            <div class="input-box">
+                                <select
+                                        name="payment[creditCardInstallments]"
+                                        id="mundicheckout-creditCard-installments"
+                                        onchange="getFormData();"
+                                >
+                                </select>
+                                <br>
+                            </div>
+
+                            <label for="">CVV<span class="required">*</span></label>
+                            <div class="input-box">
+                                <input
+                                        type="text"
+                                        data-mundicheckout-input="cvv"
+                                        class="required-entry validate-number"
+                                        id="mundicheckout-cvv"
+                                        onkeyup="getFormData()"
+                                        name="payment[creditCardCvv]"
+                                        maxlength="4"
+                                >
+                                <br>
+                            </div>
+
+                            <input
+                                    type="hidden"
+                                    id="mundicheckout-token"
+                                    name="payment[creditCardToken]">
+                        </div>
+                        <p>
+                        <div class="validation-advice hidden" id="mundipagg-invalid-credit-card-boletocc" style="">
+                            Cartão de crédito inválido.
+                        </div>
+                        </p>
+
+                    </li>
+                    <li style="clear:both">
+                        <div class="input-box">
+                            <hr/><h6>Boleto</h6>
+                            <label>CPF ou CNPJ<span class="required">*</span></label><br/>
+                            <input
+                                    type="text"
+                                    id="<?php echo $_code ?>_boletocc_taxvat-boletocc"
+                                    name="payment[boletocc_taxvat]"
+                                    class="validate-mundipagg-cpf-boletocc"
+                                    onkeyup="clearCardNumber(this);"
+                                    onchange="clearCardNumber(this);"
+                            />
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </li>
+    </ul>
+
+    <script type="javascript">
+
+        Validation.add('validate-mundipagg-cpf-boletocc', 'CPF inválido', function(v) {
+            return validaCPFboletocc(v);
+        });
+
+        function validaCPFboletocc(cpf)
+        {
+            var numeros, digitos, soma, i, resultado, digitos_iguais;
+            digitos_iguais = 1;
+            if (cpf.length < 11)
+                return false;
+            for (i = 0; i < cpf.length - 1; i++)
+                if (cpf.charAt(i) != cpf.charAt(i + 1))
+                {
+                    digitos_iguais = 0;
+                    break;
+                }
+            if (!digitos_iguais)
+            {
+                numeros = cpf.substring(0,9);
+                digitos = cpf.substring(9);
+                soma = 0;
+                for (i = 10; i > 1; i--)
+                    soma += numeros.charAt(10 - i) * i;
+                resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(0))
+                    return false;
+                numeros = cpf.substring(0,10);
+                soma = 0;
+                for (i = 11; i > 1; i--)
+                    soma += numeros.charAt(11 - i) * i;
+                resultado = soma % 11 < 2 ? 0 : 11 - soma % 11;
+                if (resultado != digitos.charAt(1))
+                    return false;
+                return true;
+            }
+            else
+                return false;
+        }
+
+        Validation.add('validate-mundipagg-creditcard-exp-boletocc', 'Data inválida', function(v) {
+            month = document.getElementById('mundicheckout-expmonth-boletocc');
+            year = document.getElementById('mundicheckout-expyear-boletocc');
+            return validateCreditCardExpiration(year.value, month.value);
+        });
+
+        Payment.prototype.save = Payment.prototype.save.wrap(function(save) {
+            if(this.currentMethod !== 'paymentmodule_creditcard') {
+                return save();
+            }
+            var key = document.getElementById('tokenDiv').getAttribute('data-mundicheckout-app-id');
+            var tokenElement = document.getElementById('mundicheckout-token');
+            var validator = new Validation(this.form);
+
+            if (this.validate() && validator.validate()) {
+                getCreditCardToken(key, function (response) {
+                    if (response != false) {
+                        tokenElement.value = response.id;
+                        jQuery("#mundipagg-invalid-credit-card-boletocc").hide();
+                        save();
+                        return;
+                    }
+                    tokenElement.value = "";
+                    jQuery("#mundipagg-invalid-credit-card-boletocc").show();
+                });
+            }
+        });
+
+        function validateCreditCardExpiration(year, month) {
+            var date = new Date();
+            var expDate = new Date(year, month - 1, 1);
+            var today = new Date(date.getFullYear(), date.getMonth(), 1);
+
+            if (expDate < today) {
+                return false;
+            }
+            return true;
+        }
+
+    </script>
+</fieldset>

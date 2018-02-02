@@ -143,6 +143,14 @@
                 <active>1</active>
                 <payment_action>authorize</payment_action>
             </paymentmodule_boleto>
+
+            <paymentmodule_boletocc>
+                <model>paymentmodule/boletocc</model>
+                <title>Mundipagg - boleto + cc</title>
+                <allowspecific>0</allowspecific>
+                <active>1</active>
+                <payment_action>authorize</payment_action>
+            </paymentmodule_boletocc>
         </payment>
     </default>
 </config>
