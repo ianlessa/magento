@@ -4,7 +4,7 @@
 app/code/community/Mundipagg/Paymentmodule            app/code/community/Mundipagg/Paymentmodule
 app/etc/modules/Mundipagg_Paymentmodule.xml           app/etc/modules/Mundipagg_Paymentmodule.xml
 
-app/design/frontend/base/default/template/paymentmodule/  app/design/frontend/base/default/template/paymentmodule/
+app/design/frontend/base/default/template/paymentmodule  app/design/frontend/base/default/template/paymentmodule
 
 #app/design/frontend/base/default/layout/paymentmodule.xml app/design/frontend/base/default/layout/paymentmodule.xml
 app/design/frontend/base/default/layout/paymentmodule.xml app/design/frontend/base/default/layout/paymentmodule.xml

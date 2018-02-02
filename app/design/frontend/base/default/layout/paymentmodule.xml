@@ -41,4 +41,14 @@
     <idecheckoutvm_index_index translate="label">
         <update handle="mundipagg_checkout_handle"/>
     </idecheckoutvm_index_index>
+
+    <checkout_onepage_success translate="label">
+        <label>One Page Checkout Success</label>
+        <reference name="content">
+            <reference name="checkout.success">
+                <action method="setTemplate"><template>paymentmodule/checkout/success/payment/success.phtml</template></action>
+            </reference>
+        </reference>
+    </checkout_onepage_success>
+
 </layout>

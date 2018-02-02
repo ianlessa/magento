@@ -28,9 +28,14 @@ class Mundipagg_Paymentmodule_Controller_Payment extends Mage_Core_Controller_Fr
             }
         }
 
-        if ($redirect) {
-            $this->_redirect('checkout/onepage/success', array('_secure' => true));
+        //@todo get boleto and the rest of success page data
+        $data = [];
+
+        if ($response->status === 'failed') {
+            $this->_redirect('checkout/onepage/failure', ['_secure' => true]);
+            return;
         }
+        $this->_redirect('checkout/onepage/success', ['_secure' => true], $data);
     }
 
     /**
