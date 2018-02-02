@@ -11,12 +11,17 @@ var toTokenApi = {
 
 var brandName = false;
 
-function getFormData() {
-    toTokenApi.card.holder_name = clearHolderName(document.getElementById('mundicheckout-holdername'));
-    toTokenApi.card.number = clearCardNumber(document.getElementById('mundicheckout-number'));
-    toTokenApi.card.exp_month = document.getElementById('mundicheckout-expmonth').value;
-    toTokenApi.card.exp_year = document.getElementById('mundicheckout-expyear').value;
-    toTokenApi.card.cvv = clearCvv(document.getElementById('mundicheckout-cvv'));
+function getFormData(elementIdSuffix) {
+    var suffix = typeof elementIdSuffix !== 'undefined' ?
+        elementIdSuffix : '';
+    toTokenApi.card = {
+        type: "credit",
+        holder_name: clearHolderName(document.getElementById('mundicheckout-holdername' + suffix)),
+        number: clearCardNumber(document.getElementById('mundicheckout-number' + suffix)),
+        exp_month: document.getElementById('mundicheckout-expmonth' + suffix).value,
+        exp_year: document.getElementById('mundicheckout-expyear' + suffix).value,
+        cvv: clearCvv(document.getElementById('mundicheckout-cvv' + suffix))
+    };
 }
 
 /**
@@ -25,7 +30,7 @@ function getFormData() {
  * @param data
  * @returns {XMLHttpRequest}
  */
-function apiRequest(url, data, callback, method, json) {
+function apiRequest(url, data, callback, method, json,callbackArgsObj) {
     var xhr = window.XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHTTP');
     xhr.open(method, url);
 
@@ -35,7 +40,7 @@ function apiRequest(url, data, callback, method, json) {
 
     xhr.onreadystatechange = function () {
         if (xhr.readyState > 3 && xhr.status == 200) {
-            callback(JSON.parse(xhr.responseText));
+            callback(JSON.parse(xhr.responseText),callbackArgsObj);
         }else{
             callback(false);
         }
@@ -91,8 +96,10 @@ function getCurrentYear() {
  * Get credit card brand
  * @param int creditCardNumber
  */
-function getBrand(creditCardNumber) {
-    brandName = jQuery("#mundipaggBrandName").val();
+function getBrand(creditCardNumber,elementIdSuffix) {
+    var suffix = typeof elementIdSuffix !== 'undefined' ?
+        elementIdSuffix : '';
+    brandName = jQuery("#mundipaggBrandName" + suffix).val();
 
     if (creditCardNumber.length > 5 && brandName == "") {
         bin = creditCardNumber.substring(0, 6);
@@ -101,19 +108,27 @@ function getBrand(creditCardNumber) {
             "",
             fillBrandData,
             "GET",
-            false
+            false,
+            {elementIdSuffix : elementIdSuffix}
         )
 
     }
     if (creditCardNumber.length < 6) {
-        clearBrand();
+        clearBrand(elementIdSuffix);
     }
 }
 
-function fillBrandData(data) {
+function fillBrandData(data,argsObj) {
     if (data.brand != "" && data.brand != undefined) {
-        showBrandImage(data.brand);
-        getInstallments(jQuery("#baseUrl").val(), data.brandName);
+        var elementIdSuffix = undefined;
+        if (
+            typeof argsObj !== 'undefined' &&
+            typeof argsObj.elementIdSuffix
+        ) {
+            elementIdSuffix = argsObj.elementIdSuffix;
+        }
+        showBrandImage(data.brand,elementIdSuffix);
+        getInstallments(jQuery("#baseUrl").val(), data.brandName,elementIdSuffix);
     }
 }
 
@@ -121,41 +136,56 @@ function fillBrandData(data) {
  * Show credit card brand image
  * @param brand
  */
-function showBrandImage(brandName) {
+function showBrandImage(brandName,elementIdSuffix) {
     html = "<img src='https://dashboard.mundipagg.com/emb/images/brands/" + brandName + ".jpg' ";
     html += " class='mundipaggImage' width='26'>";
 
-    jQuery("#mundipaggBrandName").val(brandName);
-    jQuery("#mundipaggBrandImage").html(html);
+    var suffix = typeof elementIdSuffix !== 'undefined' ?
+        elementIdSuffix : '';
+
+    jQuery("#mundipaggBrandName" + suffix).val(brandName);
+    jQuery("#mundipaggBrandImage" + suffix).html(html);
 }
 
-function clearBrand(){
-    jQuery("#mundipaggBrandName").val("");
-    jQuery("#mundipaggBrandImage").html("");
-    jQuery("#mundicheckout-creditCard-installments").html("");
+function clearBrand(elementIdSuffix){
+    var suffix = typeof elementIdSuffix !== 'undefined' ?
+        elementIdSuffix : '';
+    jQuery("#mundipaggBrandName" + suffix).val("");
+    jQuery("#mundipaggBrandImage" + suffix).html("");
+    jQuery("#mundicheckout-creditCard-installments" + suffix).html("");
 }
 
-function getInstallments(baseUrl, brandName) {
+function getInstallments(baseUrl, brandName,elementIdSuffix) {
     apiRequest(
         baseUrl + '/mundipagg/creditcard/getinstallments/' + brandName,
         '',
         switchInstallments,
         "GET",
-        false
+        false,
+        {elementIdSuffix: elementIdSuffix}
     );
 }
 
-function switchInstallments(data) {
+function switchInstallments(data,argsObj) {
     if (data){
-        html = "<option>1x sem juros</option>";
-        jQuery("#mundicheckout-creditCard-installments").html("");
+        var elementIdSuffix = undefined;
+        if (
+            typeof argsObj !== 'undefined' &&
+            typeof argsObj.elementIdSuffix
+        ) {
+            elementIdSuffix = argsObj.elementIdSuffix;
+        }
+        var suffix = typeof elementIdSuffix !== 'undefined' ?
+            elementIdSuffix : '';
 
-        data.forEach(fillInstallments);
+        html = "<option>1x sem juros</option>";
+        jQuery("#mundicheckout-creditCard-installments" + suffix).html("");
+
+        data.forEach(fillInstallments,{elementIdSuffix:elementIdSuffix});
     }
 }
 
 function fillInstallments(item, index) {
-
     if (item.interest == 0) {
         item.interest = " sem juros";
     } else{
@@ -165,5 +195,8 @@ function fillInstallments(item, index) {
     html = "<option value='"+item.times+"'>" +
             item.times + "x de " + item.amount + item.interest + "</option>";
 
-    jQuery("#mundicheckout-creditCard-installments").append(html);
+    var suffix = typeof this.elementIdSuffix !== 'undefined' ?
+        this.elementIdSuffix : '';
+
+    jQuery("#mundicheckout-creditCard-installments" + suffix).append(html);
 }

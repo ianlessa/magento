@@ -39,15 +39,15 @@
                                 Card number<span class="required">*</span>
                             </label>
                             <div class="input-box">
-                                <span id="mundipaggBrandImage"></span>
-                                <input type="hidden" id="mundipaggBrandName" value="">
+                                <span id="mundipaggBrandImage-boletocc" class="mundipaggBrandImage"></span>
+                                <input type="hidden" id="mundipaggBrandName-boletocc" value="">
                                 <input
                                         type="text"
                                         data-mundicheckout-input="number"
                                         class="required-entry validate-cc-number mundipaggInput"
-                                        id="mundicheckout-number"
-                                        onkeyup="getFormData(); getBrand(this.value);"
-                                        onchange="getFormData(); getBrand(this.value);"
+                                        id="mundicheckout-number-boletocc"
+                                        onkeyup="getFormData('-boletocc'); getBrand(this.value,'-boletocc');"
+                                        onchange="getFormData('-boletocc'); getBrand(this.value,'-boletocc');"
                                         maxlength="19"
                                         name="payment[creditCardNumber]"
                                 >
@@ -59,8 +59,8 @@
                                         type="text"
                                         data-mundicheckout-input="holder_name "
                                         class="required-entry"
-                                        id="mundicheckout-holdername"
-                                        onkeyup="getFormData()"
+                                        id="mundicheckout-holdername-boletocc"
+                                        onkeyup="getFormData('-boletocc')"
                                         name="payment[holderName]"><br>
                             </div>
 
@@ -69,8 +69,8 @@
                                 <div class="v-fix">
                                     <select
                                             class="required-entry"
-                                            id="mundicheckout-expmonth"
-                                            onchange="getFormData();"
+                                            id="mundicheckout-expmonth-boletocc"
+                                            onchange="getFormData('-boletocc');"
                                             name="payment[creditCardExpMonth]"
                                     >
                                         <option value="">--- Mês --- </option>
@@ -87,8 +87,8 @@
                                 <div class="v-fix">
                                     <select
                                             class="required-entry"
-                                            id="mundicheckout-expyear"
-                                            onchange="getFormData();"
+                                            id="mundicheckout-expyear-boletocc"
+                                            onchange="getFormData('-boletocc');"
                                             name="payment[creditCardExpYear]"
                                     >
                                         <option value="">--- Ano --- </option>
@@ -108,8 +108,8 @@
                             <div class="input-box">
                                 <select
                                         name="payment[creditCardInstallments]"
-                                        id="mundicheckout-creditCard-installments"
-                                        onchange="getFormData();"
+                                        id="mundicheckout-creditCard-installments-boletocc"
+                                        onchange="getFormData('-boletocc');"
                                 >
                                 </select>
                                 <br>
@@ -121,8 +121,8 @@
                                         type="text"
                                         data-mundicheckout-input="cvv"
                                         class="required-entry validate-number"
-                                        id="mundicheckout-cvv"
-                                        onkeyup="getFormData()"
+                                        id="mundicheckout-cvv-boletocc"
+                                        onkeyup="getFormData('-boletocc')"
                                         name="payment[creditCardCvv]"
                                         maxlength="4"
                                 >
