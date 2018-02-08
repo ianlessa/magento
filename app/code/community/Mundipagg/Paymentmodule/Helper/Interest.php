@@ -2,13 +2,17 @@
 
 class Mundipagg_Paymentmodule_Helper_Interest extends Mage_Core_Helper_Abstract
 {
-    public function getInterestValue($installmentNum,$orderTotal,$cards = null)
+    public function getInterestValue($installmentNum,$orderTotal,$cards = null, $cardBrand = 'default')
     {
         $installmentHelper = Mage::helper('paymentmodule/installment');
         $allInstallments = $installmentHelper->getInstallments($orderTotal,$cards);
 
         $installmentInterest = 0;
-        foreach($allInstallments['default'] as $installment) {
+        $brandInstallments = [];
+        if (isset($allInstallments[$cardBrand])) {
+            $brandInstallments = $allInstallments[$cardBrand];
+        }
+        foreach($brandInstallments as $installment) {
             if ($installment['times'] == $installmentNum) {
                 $installmentInterest = $installment['interest'];
                 break;

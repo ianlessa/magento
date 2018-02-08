@@ -45,9 +45,11 @@ class Mundipagg_Paymentmodule_Model_Creditcard extends Mundipagg_Paymentmodule_M
         $info->setAdditionalInformation($key . 'installments', $paymentData['creditCardInstallments']);
 
         $interestHelper = Mage::helper("paymentmodule/interest");
-        $interest = $interestHelper->getInterestValue(
+        $interest = 12.3 + $interestHelper->getInterestValue(
             $paymentData['creditCardInstallments'],
-            $info->getQuote()->getGrandTotal()
+            $info->getQuote()->getGrandTotal(),
+            null,
+            'Visa'
         );
 
         $info->setAdditionalInformation(
