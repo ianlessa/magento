@@ -60,6 +60,8 @@ class Mundipagg_Paymentmodule_BoletoccController extends Mundipagg_Paymentmodule
         $this->getBoletoPaymentInformation($payment);
         $this->getCreditcardPaymentInformation($payment);
 
+        $test = $this->order->getPayment()->getMethodInstance()->getCode();
+
         return $payment;
     }
 
