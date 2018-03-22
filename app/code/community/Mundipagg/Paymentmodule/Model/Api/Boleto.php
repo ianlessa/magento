@@ -32,7 +32,10 @@ class Mundipagg_Paymentmodule_Model_Api_Boleto extends Mundipagg_Paymentmodule_M
             $paymentRequest->paymentMethod = 'boleto';
             $paymentRequest->boleto = $boletoPaymentRequest;
             $paymentRequest->amount = $monetary->toCents($payment['value']);
-            $paymentRequest->customer = $this->getCustomer($payment['taxvat']);
+            // @todo correct this when implementing multi buyers
+            if(false) {
+                $paymentRequest->customer = $this->getCustomer($payment['taxvat']);
+            }
             // @todo this should not be hard coded
             $paymentRequest->currency = 'BRL';
 
